@@ -18,7 +18,7 @@
             div = document.createElement('DIV');
 
         div.classList.add('list-item');
-        div.addAttribute(draggble)
+        // div.addAttribute('draggble', true);
         div.innerHTML = `<img src="${srcPhoto}" alt="" class="avatar">\
             <div class="name">${lastName} ${firstName}</div>\
             <div class="btn btn__add"><i class="fas fa-plus"></i></div>`;
@@ -118,13 +118,13 @@
         console.log(e);
         if (target.classList.contains('btn__add')) {
 
-            listAddFriends.appendChild(listItem);
+            listAddFriends.insertBefore(listItem, listAddFriends.firstChild);
             target.classList.toggle('btn__add');
             target.classList.toggle('btn__delete');
 
         } else if (target.classList.contains('btn__delete')) {
 
-            listAllFriends.appendChild(listItem);
+            listAllFriends.insertBefore(listItem, listAllFriends.firstChild);
             target.classList.toggle('btn__add');
             target.classList.toggle('btn__delete');
         
