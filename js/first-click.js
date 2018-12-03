@@ -83,6 +83,7 @@
         firstBtn.classList.add('remove');
         clearInputs();
         clearLists();
+        makeDnD([listAllFriends, listAddedFriends]);
 
         await vkInit();
 
@@ -145,8 +146,40 @@
     /** DRAG and DROP */
     /** функция вешает обработчки D'n'D */
     function makeDnD(zones) {
-        
-    }
-    /** обработка начала перетаскивания dragstart */
-    
+        let currentDrag;
+
+        zones.forEach(zone => {
+            zone.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/html', 'dragstart');
+                currentDrag = { source: zone, node: e.target };
+            });
+
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            zone.addEventListener('drop', (e) => {
+                if (currentDrag) {
+                    let listItem = currentDrag.node,
+                        listItemBtn = listItem.querySelector('.btn')
+
+                    e.preventDefault();
+                    
+                    if (currentDrag.source !== zone) {
+                        if (listItem.classList.contains('list-item')) {
+                            zone.insertBefore(currentDrag.node, e.target.nextElementSibling);
+                            listItemBtn.classList.toggle('btn__add');
+                            listItemBtn.classList.toggle('btn__delete');
+                        } else {
+                            zone.insertBefore(currentDrag.node, zone.lastElementChild);
+                            listItemBtn.classList.toggle('btn__add');
+                            listItemBtn.classList.toggle('btn__delete');
+                        }
+                    }
+
+                    currentDrag = null;
+                }
+            });
+        })
+    }    
 })();
