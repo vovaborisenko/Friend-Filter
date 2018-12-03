@@ -145,10 +145,10 @@
   height: 60px;
   padding: 5px 8px;
   border-bottom: #f0f0f0 solid 1px;
+  cursor: -webkit-grab;
 }
 
 .list-item:hover {
-  cursor: pointer;
   background-color: #f0f0f0;
 }
 

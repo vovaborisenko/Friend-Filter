@@ -4,10 +4,11 @@
         btnClose = document.querySelector('.btn__close'), // кнопка, которая закрывает модальное окно
         lists = document.querySelectorAll('.col .list'), // набор списков друзей
         listAllFriends = document.querySelector('.col-all .list'), // контейнер списка всех друзей
-        listAddFriends = document.querySelector('.col-add .list'), // контейнер списка выбранных друзей
+        listAddedFriends = document.querySelector('.col-add .list'), // контейнер списка выбранных друзей
         inputs = document.querySelectorAll('.col .filter'), // набор input-ов
         inputAllFriends = document.querySelector('.col-all .filter'), // input списка всех друзей
-        inputAddFriends = document.querySelector('.col-add .filter') // input списка выбранных друзей
+        inputAddFriends = document.querySelector('.col-add .filter'), // input списка выбранных друзей
+        itemsList = document.querySelectorAll('.list-item') // набор всех плашек друзей
 
 
     /** функция обрабатывает данные одного друга {data} пришедшие от VK, возвращает html элемент {div} */
@@ -18,7 +19,7 @@
             div = document.createElement('DIV');
 
         div.classList.add('list-item');
-        // div.addAttribute('draggble', true);
+        div.draggable = true;
         div.innerHTML = `<img src="${srcPhoto}" alt="" class="avatar">\
             <div class="name">${lastName} ${firstName}</div>\
             <div class="btn btn__add"><i class="fas fa-plus"></i></div>`;
@@ -57,7 +58,7 @@
         }
     }
 
-    /** функция очищает все inputs и списки */
+    /** функции очищает все inputs и списки */
     function clearInputs() {
         for (const item of inputs) {
             item.innerHTML = '';
@@ -67,6 +68,12 @@
         for (const item of lists) {
             item.innerHTML = '';
         }
+    }
+
+    /** функция переносит html элемент {item} в контейнер {container} */
+    function moveElementInContainer(item, container) {
+
+        container.insertBefore(item, container.firstChild);              
     }
 
     /** обрабатывает клик на картинку "другофильтр" */
@@ -113,21 +120,33 @@
 
     /** обрабатывает нажатие на плюсик или крестик на плашке "друга" */
     document.addEventListener('click', (e) => {
-        let target = e.target.parentElement,
-            listItem = target.parentElement;
+        let target = e.target;            
         console.log(e);
-        if (target.classList.contains('btn__add')) {
+        if (target.tagName === 'I'){
+            let targetBtn = target.parentElement;
 
-            listAddFriends.insertBefore(listItem, listAddFriends.firstChild);
-            target.classList.toggle('btn__add');
-            target.classList.toggle('btn__delete');
+            if (targetBtn.classList.contains('btn__add')) {
+                let listItem = targetBtn.parentElement;
 
-        } else if (target.classList.contains('btn__delete')) {
+                moveElementInContainer(listItem, listAddedFriends);
+                targetBtn.classList.toggle('btn__add');
+                targetBtn.classList.toggle('btn__delete');
 
-            listAllFriends.insertBefore(listItem, listAllFriends.firstChild);
-            target.classList.toggle('btn__add');
-            target.classList.toggle('btn__delete');
-        
+            } else if (targetBtn.classList.contains('btn__delete')) {
+                let listItem = targetBtn.parentElement;
+
+                moveElementInContainer(listItem, listAllFriends);
+                targetBtn.classList.toggle('btn__add');
+                targetBtn.classList.toggle('btn__delete');            
+            }
         }
-    })
+    });
+
+    /** DRAG and DROP */
+    /** функция вешает обработчки D'n'D */
+    function makeDnD(zones) {
+        
+    }
+    /** обработка начала перетаскивания dragstart */
+    
 })();
