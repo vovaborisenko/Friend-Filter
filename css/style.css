@@ -27,8 +27,11 @@
   border-radius: 3px;
 }
 
+html,
+body,
 .container {
   height: 100%;
+  margin: 0;
 }
 
 .logo {
@@ -72,6 +75,11 @@
 
 .btn {
   cursor: pointer;
+  transition: .3s;
+}
+
+.btn__close:hover {
+  transform: rotate(-45deg);
 }
 
 .btn__close {
@@ -148,6 +156,10 @@
   cursor: -webkit-grab;
 }
 
+.list-item:active {
+  cursor: -webkit-grabbing;
+}
+
 .list-item:hover {
   background-color: #f0f0f0;
 }
@@ -193,7 +205,19 @@
   background-color: #ff8663;
   color: #fff;
   cursor: pointer;
+  transition: .4s;
+}
 
+.btn__save:hover {
+  background-color: #fd5525;
+}
+
+.btn__save:active {
+  background-color: #fb3b04;
+}
+
+#green {
+  background-color: darkgreen;
 }
 
 .unvisible {
