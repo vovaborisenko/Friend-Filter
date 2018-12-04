@@ -214,7 +214,10 @@
                             listItemBtn.classList.toggle('btn__add');
                             listItemBtn.classList.toggle('btn__delete');
                         }                
-                    }
+                    };
+                    /** отфильтровать новые списки */                
+                    filterItems(listAddedFriends, inputAddedFriends.value); 
+                    filterItems(listAllFriends, inputAllFriends.value);
 
                     currentDrag = null; // стираем данные о переносимой плашке
                 }
