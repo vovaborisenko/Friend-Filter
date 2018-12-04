@@ -6,7 +6,9 @@
         lists = document.querySelectorAll('.col .list'), // набор списков друзей
         listAllFriends = document.querySelector('.col-all .list'), // контейнер списка всех друзей
         listAddedFriends = document.querySelector('.col-add .list'), // контейнер списка выбранных друзей
-        inputs = document.querySelectorAll('.col .filter'); // набор input-ов
+        inputs = document.querySelectorAll('.col .filter'), // набор input-ов
+        inputAllFriends = document.querySelector('.col-all .filter'), // набор input-ов
+        inputAddedFriends = document.querySelector('.col-add .filter') // набор input-ов
 
     /** функция обрабатывает данные одного друга {data} пришедшие от VK, возвращает html элемент {div} */
     function renderFriend (data) {
@@ -37,11 +39,13 @@
         let itemsList = list.children;
 
         unsetList(list);
-        for (const item of itemsList) {
-            let name = item.querySelector('.name').innerHTML;
+        if (filter) {            
+            for (const item of itemsList) {
+                let name = item.querySelector('.name').innerHTML;
 
-            if (!isHas(name, filter)) {
-                item.classList.add('unvisible')
+                if (!isHas(name, filter)) {
+                    item.classList.add('unvisible')
+                };
             };
         };
     };
@@ -159,6 +163,8 @@
                 /** переключаем "плюс" на "крестик" */
                 targetBtn.classList.toggle('btn__add'); 
                 targetBtn.classList.toggle('btn__delete');
+                /** отфильтровать новые списки */                
+                filterItems(listAddedFriends, inputAddedFriends.value); 
 
             } else if (targetBtn.classList.contains('btn__delete')) {
                 let listItem = targetBtn.parentElement; // плашка друга, которой нажат "крестик"
@@ -166,8 +172,10 @@
                 moveElementInContainer(listItem, listAllFriends); //перемещаем плашку друга в соседний список
                 /** переключаем "плюс" на "крестик" */
                 targetBtn.classList.toggle('btn__add');
-                targetBtn.classList.toggle('btn__delete');            
-            }
+                targetBtn.classList.toggle('btn__delete');
+                /** отфильтровать новые списки */
+                filterItems(listAllFriends, inputAllFriends.value);            
+            };
         }
     });
 
